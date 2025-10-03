@@ -35,7 +35,7 @@ section>h2{text-align:center;margin:0 0 1rem}
 
 .hero{
     position:relative; min-height:22vh;
-    background:var(--gradient), url('/images/hero.jpg') center/cover no-repeat;
+    background:var(--gradient);
     display:flex; align-items:center; justify-content:center;
 }
 .hero-overlay{width:100%}
