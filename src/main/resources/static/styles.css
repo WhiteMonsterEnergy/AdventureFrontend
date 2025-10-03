@@ -27,7 +27,7 @@ section{padding:1.25rem 0}
 section>h2{text-align:center;margin:0 0 1rem}
 
 .site-header{background:#fff;border-bottom:1px solid var(--border)}
-.site-header-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.6rem 0}
+.site-header-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.6rem 1.2rem}
 .branding .logo{font-size:1.1rem;font-weight:700;color:var(--green-dark);text-decoration:none}
 .main-nav ul{list-style:none;display:flex;gap:1.2rem;flex-wrap:wrap}
 .main-nav a{text-decoration:none;color:#333;font-weight:500;position:relative;padding:.2rem 0}
