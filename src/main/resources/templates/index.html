@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Adventure Park | Booking</title>
+    <link rel="stylesheet" th:href="@{/styles.css(v=${#dates.createNow().time})}">
+</head>
+<body>
+
+<header class="site-header"  th:insert="~{fragments/navbar :: navbar}"></header>
+
+<!-- site banner -->
+<section class="hero">
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Book oplevelser hos os</h1>
+                <p>Vælg aktivitet, dato og antal deltagere. Hurtigt og nemt.</p>
+                <a href="#booking-form" class="btn primary">Start booking</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- main content section -->
+<section class="container fit-grid">
+    <div th:insert="~{fragments/guide :: guide}"></div>
+</section>
+
+<div th:insert="~{fragments/list :: list_small}"></div>
+
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>
