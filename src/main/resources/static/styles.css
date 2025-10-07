@@ -97,3 +97,45 @@ section>h2{text-align:center;margin:0 0 1rem}
 @media (prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important}
 }
+
+/* === Admin UI (tilføjet) === */
+.admin-grid{align-items:start}
+.admin-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:1rem;
+}
+.admin-card-head{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:.6rem;
+}
+.admin-card-head h2{margin:0}
+.admin-search{display:flex; gap:.5rem}
+.admin-search input[type="search"]{
+    border:1px solid var(--border); background:#fdfefe; padding:.55rem .6rem; border-radius:6px; font-size:.95rem;
+}
+.admin-list{display:flex; flex-direction:column; gap:.6rem}
+.activity-row{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    background:var(--panel); border:1px solid var(--border);
+    border-radius:var(--radius); padding:.7rem .8rem;
+}
+.activity-row h3{margin:0; font-size:1rem; color:var(--green-dark)}
+.row-main{min-width:0}
+.row-meta{display:flex; flex-wrap:wrap; gap:.45rem 1rem; margin-top:.2rem; font-size:.9rem; color:#444}
+.row-meta .meta{opacity:.9}
+.row-actions{display:flex; gap:.5rem; flex-wrap:wrap}
+.status{
+    display:inline-block; font-weight:700; font-size:.72rem; letter-spacing:.3px;
+    padding:.25rem .5rem; border-radius:999px; border:1px solid var(--border); background:#f8faf9;
+}
+.status.ok{background:#e8f6ee; color:#0b5; border-color:#d4eadf}
+.status.off{background:#f6f6f6; color:#666; border-color:#e6e6e6}
+.admin-form textarea{
+    border:1px solid var(--border); background:#fdfefe; padding:.55rem .6rem; border-radius:6px;
+    font-size:.95rem; font-family:inherit; transition:border-color var(--trans), box-shadow var(--trans);
+    resize:vertical;
+}
+.admin-form textarea:focus{outline:none; border-color:var(--green-soft); box-shadow:0 0 0 3px rgba(28,153,90,.18)}
+.muted{color:#666; font-size:.95rem}
