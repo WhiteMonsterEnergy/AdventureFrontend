@@ -13,4 +13,15 @@
     <input id="loginBtn" type="submit" value="Log In" />
 </form>
 
+<div th:fragment="loginModal" id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div th:insert="~{fragments/login :: loginPrompt}"></div>
+    </div>
+
+    <script src="/javascript/login.js"></script>
+</div>
+
 </html>
