@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Adventure Park | Employee – Aktive bookinger</title>
+
+    <link rel="stylesheet"
+          href="/styles.css"
+          th:href="@{/styles.css(v=${#dates.createNow().time})}">
+
+    <style>
+        .table-responsive { overflow: auto; }
+        .toolbar { display: flex; gap: .5rem; flex-wrap: wrap; }
+        .toolbar .btn.active { outline: 2px solid var(--accent, #ffb347); }
+        .muted { opacity: .7; }
+        .badge { font-size: .8rem; padding: .25rem .5rem; border-radius: 999px; border: 1px solid var(--border, #d9e2d9); }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container site-header-inner">
+        <div class="branding">
+            <a href="/" class="logo">Adventure Park</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/">Booking</a></li>
+                <li><a href="/aktiviteter">Aktiviteter</a></li>
+                <li><a href="/admin/activities">Admin</a></li>
+                <li><a href="/employee/bookings" class="active">Employee</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="container fit-grid">
+    <section class="admin-card">
+        <header class="admin-card-head" style="gap:.8rem;align-items:end">
+            <div style="flex:1 1 auto">
+                <h2>Aktive bookinger <span id="count" class="badge">0</span></h2>
+                <p class="muted">Viser kommende/aktive – ekskl. annullerede/afsluttede.</p>
+            </div>
+
+            <div class="toolbar">
+                <button class="btn" data-filter="today">I dag</button>
+                <button class="btn active" data-filter="all">Alle</button>
+                <form class="admin-search" onsubmit="event.preventDefault();" style="margin-left:auto">
+                    <input type="search" id="q" placeholder="Søg aktivitet/kunde">
+                    <button class="btn" type="button" id="btnSearch">Søg</button>
+                </form>
+            </div>
+        </header>
+
+        <div class="table-responsive">
+            <table class="data-table" id="tbl">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Start</th>
+                    <th>Slut</th>
+                    <th>Aktivitet</th>
+                    <th>Kunde</th>
+                    <th>Deltagere</th>
+                    <th>Status</th>
+                    <th>Handling</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <tr th:each="b : ${bookings}">
+                    <td th:text="${b.id}">1</td>
+                    <td th:text="${#temporals.format(b.startTime,'dd-MM-yyyy HH:mm')}">10-10-2025 12:00</td>
+                    <td th:text="${#temporals.format(b.endTime,'HH:mm')}">13:00</td>
+                    <td th:text="${b.activityName}">Minigolf</td>
+                    <td th:text="${b.customerName}">Mads Dam</td>
+                    <td th:text="${b.participants}">8</td>
+                    <td><span class="tag" th:text="${b.status}">ACTIVE</span></td>
+                    <td><a class="btn" th:href="@{'/employee/bookings/' + ${b.id}}">Detaljer</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="empty" class="muted" style="display:none;text-align:center;padding:1rem">
+            Ingen aktive bookinger matcher dine filtre.
+        </div>
+    </section>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 Adventure Park</p>
+    </div>
+</footer>
+
+<script>
+    // MOCK indtil backend er klar
+    const MOCK_BOOKINGS = [
+        {id: 101, activityName:'Minigolf',  customerName:'Mads Dam',    participants:8,
+            startTime:'2025-10-08T14:00:00', endTime:'2025-10-08T15:30:00', status:'ACTIVE'},
+        {id: 102, activityName:'Laser Tag', customerName:'Anna Jensen', participants:10,
+            startTime:'2025-10-08T18:00:00', endTime:'2025-10-08T19:00:00', status:'PENDING'},
+        {id: 103, activityName:'Bowling',   customerName:'Nordic ApS',  participants:16,
+            startTime:'2025-10-09T12:00:00', endTime:'2025-10-09T14:00:00', status:'ACTIVE'},
+        {id: 104, activityName:'Escape Room', customerName:'Sofie H',   participants:5,
+            startTime:'2025-10-07T10:00:00', endTime:'2025-10-07T11:00:00', status:'COMPLETED'},
+        {id: 105, activityName:'Minigolf',  customerName:'Team Blue',   participants:6,
+            startTime:'2025-10-08T09:00:00', endTime:'2025-10-08T10:00:00', status:'ACTIVE'},
+        {id: 106, activityName:'Bowling',   customerName:'Kasper K',    participants:3,
+            startTime:'2025-10-10T17:30:00', endTime:'2025-10-10T18:30:00', status:'PENDING'},
+    ];
+
+    const tbody = document.getElementById('tbody');
+    const count = document.getElementById('count');
+    const empty = document.getElementById('empty');
+    const qInput = document.getElementById('q');
+
+    let view = 'all'; // 'today' | 'all'
+    let query = '';
+
+    function isActive(b){
+        return ['ACTIVE','PENDING'].includes((b.status||'').toUpperCase());
+    }
+    function parseDT(s){ return new Date(s); }
+    function isToday(d){
+        const t=new Date();
+        return d.getFullYear()===t.getFullYear() &&
+            d.getMonth()===t.getMonth() &&
+            d.getDate()===t.getDate();
+    }
+    function formatDT(dt){
+        const d = new Date(dt);
+        const pad = n => String(n).padStart(2,'0');
+        return `${pad(d.getDate())}-${pad(d.getMonth()+1)}-${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+    function formatT(dt){
+        const d = new Date(dt);
+        const pad = n => String(n).padStart(2,'0');
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function render(data){
+        tbody.innerHTML = '';
+        let shown = 0;
+        data.forEach(b=>{
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${b.id}</td>
+                <td>${formatDT(b.startTime)}</td>
+                <td>${formatT(b.endTime)}</td>
+                <td>${b.activityName}</td>
+                <td>${b.customerName}</td>
+                <td>${b.participants}</td>
+                <td><span class="tag">${b.status}</span></td>
+                <td><a class="btn" href="/employee/bookings/${b.id}">Detaljer</a></td>`;
+            tbody.appendChild(tr);
+            shown++;
+        });
+        count.textContent = shown;
+        empty.style.display = shown ? 'none' : 'block';
+    }
+
+    function applyFilters(){
+        let data = MOCK_BOOKINGS.filter(isActive);
+
+        if(view==='today'){
+            data = data.filter(b=>isToday(parseDT(b.startTime)));
+        }
+
+        const q = query.trim().toLowerCase();
+        if(q){
+            data = data.filter(b =>
+                (b.activityName||'').toLowerCase().includes(q) ||
+                (b.customerName||'').toLowerCase().includes(q)
+            );
+        }
+        data.sort((a,b)=> parseDT(a.startTime)-parseDT(b.startTime));
+        render(data);
+    }
+
+    // filter-knapper
+    document.querySelectorAll('[data-filter]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+            document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            view = btn.dataset.filter; // 'today' eller 'all'
+            applyFilters();
+        });
+    });
+
+    // søgning
+    document.getElementById('btnSearch').addEventListener('click', ()=>{
+        query = qInput.value;
+        applyFilters();
+    });
+    qInput.addEventListener('keydown', e=>{
+        if(e.key==='Enter'){ query = qInput.value; applyFilters(); }
+    });
+
+    // init
+    applyFilters();
+</script>
+</body>
+</html>

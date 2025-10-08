@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title th:text="'Adventure Park | Booking' + (${booking} != null ? ' #' + ${booking.id} : '')">
+        Adventure Park | Booking
+    </title>
+
+    <link rel="stylesheet"
+          href="/styles.css"
+          th:href="@{/styles.css(v=${#dates.createNow().time})}">
+
+    <style>
+        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        @media (max-width: 820px){ .two-col{grid-template-columns:1fr} }
+        .panel{background:var(--panel,#fff);border:1px solid var(--border,#d9e2d9);border-radius:var(--radius,10px);box-shadow:var(--shadow,0 4px 14px rgba(0,0,0,.08));padding:1rem}
+        .kv{display:grid;grid-template-columns:160px 1fr;gap:.4rem .8rem;align-items:center}
+        .kv dt{font-weight:600;opacity:.85}
+        .kv dd{margin:0}
+        .tag{border:1px solid var(--border,#d9e2d9);border-radius:999px;padding:.15rem .6rem;font-size:.8rem;background:#fff}
+        .hline{height:2px;background:currentColor;opacity:.15;margin:.25rem 0 1rem;width:64px}
+        .actions{display:flex;gap:.6rem;justify-content:center;margin-top:1rem}
+    </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="container site-header-inner">
+        <div class="branding"><a href="/" class="logo">Adventure Park</a></div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/">Booking</a></li>
+                <li><a href="/aktiviteter">Aktiviteter</a></li>
+                <li><a href="/admin/activities">Admin</a></li>
+                <li><a href="/employee/bookings" class="active">Employee</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="container fit-grid">
+    <section class="admin-card">
+
+        <!-- Header uden ekstra 'Tilbage'-knap -->
+        <header class="admin-card-head" style="gap:1rem">
+            <div style="flex:1 1 auto">
+                <h2 th:if="${booking != null}">
+                    Booking <span th:text="'#' + ${booking.id}">#0</span>
+                    <span class="tag" th:text="${booking.status}">ACTIVE</span>
+                </h2>
+                <h2 th:if="${booking == null}">Booking</h2>
+
+                <p class="muted" th:if="${booking != null}">
+                    <span th:text="${#temporals.format(booking.startTime,'dd-MM-yyyy HH:mm')}">08-10-2025 12:00</span>
+                    &nbsp;→&nbsp;
+                    <span th:text="${#temporals.format(booking.endTime,'HH:mm')}">14:00</span>
+                    · <span th:text="${booking.activityName}">Minigolf</span>
+                </p>
+            </div>
+        </header>
+
+        <!-- IKKE FUNDET -->
+        <div th:if="${booking == null}" class="panel" style="text-align:center">
+            <p class="muted">Booking kunne ikke findes.</p>
+            <div class="actions">
+                <a class="btn" href="/employee/bookings">Tilbage til oversigt</a>
+            </div>
+        </div>
+
+        <!-- FUNDET -->
+        <div th:if="${booking != null}" class="two-col">
+
+            <!-- Venstre: booking + kunde -->
+            <article class="panel">
+                <h3>Booking</h3>
+                <div class="hline"></div>
+                <dl class="kv">
+                    <dt>ID</dt><dd th:text="${booking.id}">105</dd>
+                    <dt>Status</dt><dd><span class="tag" th:text="${booking.status}">ACTIVE</span></dd>
+                    <dt>Aktivitet</dt><dd th:text="${booking.activityName}">Minigolf</dd>
+                    <dt>Start</dt><dd th:text="${#temporals.format(booking.startTime,'dd-MM-yyyy HH:mm')}">08-10-2025 12:00</dd>
+                    <dt>Slut</dt><dd th:text="${#temporals.format(booking.endTime,'HH:mm')}">14:00</dd>
+                    <dt>Deltagere</dt><dd th:text="${booking.participants}">8</dd>
+                    <dt>Gruppetype</dt><dd th:text="${booking.groupType}">Firma</dd>
+                    <dt>Aldersgrupper</dt>
+                    <dd th:if="${booking.ageGroups != null}">
+                        <span class="tag" th:each="g : ${booking.ageGroups}" th:text="${g}" style="margin-right:.3rem">18+</span>
+                    </dd>
+                </dl>
+
+                <h3 style="margin-top:1rem">Kunde</h3>
+                <div class="hline"></div>
+                <dl class="kv">
+                    <dt>Navn</dt><dd th:text="${booking.customerName}">Mads Dam</dd>
+                    <dt>Email</dt><dd><a th:href="'mailto:' + ${booking.email}" th:text="${booking.email}">kunde@mail.dk</a></dd>
+                    <dt>Telefon</dt><dd><a th:href="'tel:' + ${booking.phone}" th:text="${booking.phone}">60 00 00 00</a></dd>
+                    <dt>Note</dt><dd th:text="${booking.customerNote}">—</dd>
+                </dl>
+            </article>
+
+            <!-- Højre: pris + evt. ekstra -->
+            <article class="panel">
+                <h3>Pris</h3>
+                <div class="hline"></div>
+                <dl class="kv">
+                    <dt>Total</dt>
+                    <dd th:if="${booking.priceTotal != null}"
+                        th:text="${#numbers.formatDecimal(booking.priceTotal,0,'POINT',2,'COMMA')} + ' DKK'">1.200 DKK</dd>
+                    <dd th:if="${booking.priceTotal == null}" class="muted">—</dd>
+
+                    <dt>Pr. person</dt>
+                    <dd th:if="${booking.pricePerPerson != null}"
+                        th:text="${#numbers.formatDecimal(booking.pricePerPerson,0,'POINT',2,'COMMA')} + ' DKK'">150 DKK</dd>
+                    <dd th:if="${booking.pricePerPerson == null}" class="muted">—</dd>
+                </dl>
+
+                <h3 style="margin-top:1rem" th:if="${booking.activities}">Aktiviteter i booking</h3>
+                <div class="hline" th:if="${booking.activities}"></div>
+                <ul th:if="${booking.activities}" style="margin-left:1rem;line-height:1.8">
+                    <li th:each="a : ${booking.activities}">
+                        <span th:text="${a.name}">Minigolf</span>
+                        <span class="muted" th:if="${a.durationMinutes}"> · <span th:text="${a.durationMinutes}">60</span> min</span>
+                    </li>
+                </ul>
+
+                <h3 style="margin-top:1rem" th:if="${booking.internalNote}">Intern note</h3>
+                <div class="hline" th:if="${booking.internalNote}"></div>
+                <p th:if="${booking.internalNote}" class="muted" th:text="${booking.internalNote}"></p>
+            </article>
+        </div>
+
+        <!-- Én samlet tilbage-knap nederst -->
+        <div class="actions" th:if="${booking != null}">
+            <a class="btn" href="/employee/bookings">Tilbage til oversigt</a>
+        </div>
+
+    </section>
+</section>
+
+<footer class="site-footer">
+    <div class="container"><p>&copy; 2025 Adventure Park</p></div>
+</footer>
+</body>
+</html>
