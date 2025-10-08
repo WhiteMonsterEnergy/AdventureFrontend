@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Adventure Park | Admin – Aktiviteter</title>
+  <link rel="stylesheet" href="/styles.css"
+        th:href="@{/styles.css(v=${#dates.createNow().time})}">
+</head>
+<body>
+<header class="site-header">
+  <div class="container site-header-inner">
+    <div class="branding">
+      <a href="/" class="logo">Adventure Park</a>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="/">Booking</a></li>
+        <li><a href="/aktiviteter">Aktiviteter</a></li>
+        <li><a href="/priser">Priser</a></li>
+        <li><a href="/kontakt">Kontakt</a></li>
+        <li><a href="/admin/activities" class="active">Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-overlay">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Administrér aktiviteter</h1>
+        <p>Opret nye eller opdatér eksisterende aktiviteter.</p>
+        <a href="#editor" class="btn primary">Ny aktivitet</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container fit-grid admin-grid">
+  <section class="admin-card">
+    <header class="admin-card-head">
+      <h2>Aktiviteter</h2>
+      <form method="get" class="admin-search">
+        <input type="search" name="q" placeholder="Søg navn/kategori">
+        <button class="btn" type="submit">Søg</button>
+      </form>
+    </header>
+
+    <div class="admin-list">
+      <article class="activity-row">
+        <div class="row-main">
+          <h3>Minigolf</h3>
+          <p>18 huller i varierende sværhedsgrad.</p>
+        </div>
+        <div class="row-actions">
+          <a class="btn" href="#">Redigér</a>
+          <button class="btn">Skjul</button>
+        </div>
+      </article>
+
+      <article class="activity-row">
+        <div class="row-main">
+          <h3>Escape Room</h3>
+          <p>Løs gåder på tid i tema-rum.</p>
+        </div>
+        <div class="row-actions">
+          <a class="btn" href="#">Redigér</a>
+          <button class="btn">Skjul</button>
+        </div>
+      </article>
+
+      <article class="activity-row">
+        <div class="row-main">
+          <h3>Bowling</h3>
+          <p>Moderne baner og loungeområde.</p>
+        </div>
+        <div class="row-actions">
+          <a class="btn" href="#">Redigér</a>
+          <button class="btn">Skjul</button>
+        </div>
+      </article>
+
+      <article class="activity-row">
+        <div class="row-main">
+          <h3>Laser Tag</h3>
+          <p>Hurtig action med vest og blaster.</p>
+        </div>
+        <div class="row-actions">
+          <a class="btn" href="#">Redigér</a>
+          <button class="btn">Skjul</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="editor" class="admin-card">
+    <h2>Ny aktivitet</h2>
+
+    <form method="post" class="booking-form admin-form">
+      <input type="hidden" name="id">
+
+      <div class="field two-col">
+        <div>
+          <label for="name">Navn</label>
+          <input id="name" name="name" type="text" required>
+        </div>
+        <div>
+          <label for="category">Kategori</label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Vælg</option>
+            <option>Familie</option>
+            <option>Action</option>
+            <option>Hold</option>
+            <option>Social</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="description">Beskrivelse</label>
+        <textarea id="description" name="description" rows="4" placeholder="Kort beskrivelse" required></textarea>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field two-col">
+        <div>
+          <label for="price">Pris (DKK)</label>
+          <input id="price" name="price" type="number" step="0.01" min="0" required>
+        </div>
+        <div>
+          <label for="durationMinutes">Varighed (min)</label>
+          <input id="durationMinutes" name="durationMinutes" type="number" min="10" max="600" required>
+        </div>
+      </div>
+
+      <div class="field two-col">
+        <div>
+          <label for="capacity">Kapacitet</label>
+          <input id="capacity" name="capacity" type="number" min="1" max="200" required>
+        </div>
+        <div>
+          <label for="ageRequirement">Alderskrav</label>
+          <input id="ageRequirement" name="ageRequirement" type="text" placeholder="Fx 12+, 18+, alle aldre" required>
+        </div>
+      </div>
+
+      <div class="actions" style="gap:.6rem">
+        <a class="btn" href="/admin/activities">Annullér</a>
+        <button class="btn primary" type="submit">Gem</button>
+      </div>
+    </form>
+  </section>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2025 Adventure Park</p>
+  </div>
+</footer>
+</body>
+</html>
