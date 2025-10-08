@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Adventure Park | Booking</title>
-    <!-- Cache-busting så du ser de NYE styles hver gang -->
     <link rel="stylesheet" th:href="@{/styles.css(v=${#dates.createNow().time})}">
 </head>
 <body>
@@ -19,8 +18,8 @@
                 <li><a href="/aktiviteter">Aktiviteter</a></li>
                 <li><a href="/priser">Priser</a></li>
                 <li><a href="/kontakt">Kontakt</a></li>
-                <!-- NYT: Admin-link til den nye side -->
                 <li><a href="/admin/activities">Admin</a></li>
+                <li><a href="/employee/bookings">Employee</a></li>
             </ul>
         </nav>
     </div>
@@ -38,7 +37,6 @@
     </div>
 </section>
 
-<!-- Above-the-fold indhold i én grid: steps + booking side om side -->
 <section class="container fit-grid">
     <section class="steps">
         <h2>Sådan gør du</h2>
