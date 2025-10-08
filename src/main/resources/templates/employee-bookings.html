@@ -10,6 +10,12 @@
           th:href="@{/styles.css(v=${#dates.createNow().time})}">
 
     <style>
+
+        :root{
+            --accent:#ffb347;
+            --border:#d9e2d9;
+        }
+
         .table-responsive { overflow: auto; }
         .toolbar { display: flex; gap: .5rem; flex-wrap: wrap; }
         .toolbar .btn.active { outline: 2px solid var(--accent, #ffb347); }
@@ -40,7 +46,7 @@
         <header class="admin-card-head" style="gap:.8rem;align-items:end">
             <div style="flex:1 1 auto">
                 <h2>Aktive bookinger <span id="count" class="badge">0</span></h2>
-                <p class="muted">Viser kommende/aktive – ekskl. annullerede/afsluttede.</p>
+                <p class="muted">Viser kommende/aktive.</p>
             </div>
 
             <div class="toolbar">
@@ -179,7 +185,6 @@
         render(data);
     }
 
-    // filter-knapper
     document.querySelectorAll('[data-filter]').forEach(btn=>{
         btn.addEventListener('click', ()=>{
             document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));
@@ -189,7 +194,6 @@
         });
     });
 
-    // søgning
     document.getElementById('btnSearch').addEventListener('click', ()=>{
         query = qInput.value;
         applyFilters();
@@ -198,7 +202,7 @@
         if(e.key==='Enter'){ query = qInput.value; applyFilters(); }
     });
 
-    // init
+
     applyFilters();
 </script>
 </body>
