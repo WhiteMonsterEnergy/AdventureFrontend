@@ -1,3 +1,5 @@
+
+name: AdventureXP
 services:
   mysql:
     image: mysql:latest
@@ -13,20 +15,20 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-#  backend:
-#    container_name: backend
-#    build:
-#      context: ../AdventureBackend
-#    ports:
-#      - "127.0.0.1:8082:8080"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=mysql
-#      - DB_DRIVER=com.mysql.cj.jdbc.Driver
-#      - dbUrl=jdbc:mysql://mysql:3306/kea
-#      - dbUsername=kea
-#      - dbPassword=kea
-#    depends_on:
-#      - mysql
+  backend:
+    container_name: backend
+    build:
+      context: ../AdventureBackend
+    ports:
+      - "127.0.0.1:8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=mysql
+      - DB_DRIVER=com.mysql.cj.jdbc.Driver
+      - dbUrl=jdbc:mysql://mysql:3306/kea
+      - dbUsername=kea
+      - dbPassword=kea
+    depends_on:
+      - mysql
 
   frontend:
     container_name: frontend
