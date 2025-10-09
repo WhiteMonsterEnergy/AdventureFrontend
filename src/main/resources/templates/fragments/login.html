@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<form th:fragment="loginPrompt" th:action="@{/OmdirigerLogind}" method="get" style="display: table-caption;">
+<form th:fragment="loginForm" id="loginForm" method="get" style="display: table-caption;">
     <label>
         Username:
         <input type="text" id="usernameInp" autofocus="autofocus" required/>
@@ -13,12 +13,12 @@
     <input id="loginBtn" type="submit" value="Log In" />
 </form>
 
-<div th:fragment="loginModal" id="myModal" class="modal">
+<div th:fragment="loginPrompt" id="loginPrompt" class="modal">
 
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
-        <div th:insert="~{fragments/login :: loginPrompt}"></div>
+        <div th:insert="~{fragments/login :: loginForm}"></div>
     </div>
 
     <script src="/javascript/login.js"></script>
