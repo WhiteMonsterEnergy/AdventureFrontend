@@ -3,199 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Adventure Park | Booking</title>
+    <title>Adventure Park</title>
     <link rel="stylesheet" th:href="@{/styles.css(v=${#dates.createNow().time})}">
 </head>
 <body>
-<header class="site-header">
-    <div class="container site-header-inner">
-        <div class="branding">
-            <a href="/" class="logo">Adventure Park</a>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="/" class="active">Booking</a></li>
-                <li><a href="/aktiviteter">Aktiviteter</a></li>
-                <li><a href="/priser">Priser</a></li>
-                <li><a href="/kontakt">Kontakt</a></li>
-                <li><a href="/admin/activities">Admin</a></li>
-                <li><a href="/employee/bookings">Employee</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<header class="site-header" th:insert="~{fragments/navbar :: navbar}"></header>
 
-<section class="hero">
-    <div class="hero-overlay">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Book oplevelser hos os</h1>
-                <p>Vælg aktivitet, dato og antal deltagere. Hurtigt og nemt.</p>
-                <a href="#booking-form" class="btn primary">Start booking</a>
-            </div>
-        </div>
-    </div>
-</section>
+<div id="booking-page" class="page" style="display:block" th:insert="~{fragments/booking_form :: bookingForm}"></div>
+<div id="activities-page" class="page" style="display:none" th:insert="~{fragments/list :: list}"></div>
+<div id="prices-page" class="page" style="display:none" th:insert="~{fragments/guide :: guide}"></div>
+<div id="contact-page" class="page" style="display:none" th:insert="~{fragments/footer :: footer}"></div>
+<div id="login-page" class="page" style="display:none"><section class="container"><h2>Log ind</h2></section></div>
+<div id="employee-bookings-page" class="page" style="display:none" th:insert="~{fragments/employee-bookings :: employeeBookings}"></div>
+<div id="employee-booking-detail-page" class="page" style="display:none" th:insert="~{fragments/employee-booking-detail :: employeeBookingDetail}"></div>
+<div id="admin-page" class="page" style="display:none" th:insert="~{fragments/admin-activities :: activitymanagement}"></div>
 
-<section class="container fit-grid">
-    <section class="steps">
-        <h2>Sådan gør du</h2>
-        <ol class="step-flow">
-            <li>
-                <span class="step-number">1</span>
-                <h4>Vælg aktivitet</h4>
-                <p>Find den oplevelse der passer jer.</p>
-            </li>
-            <li>
-                <span class="step-number">2</span>
-                <h4>Vælg dato & tidspunkt</h4>
-                <p>Se ledige slots og reserver.</p>
-            </li>
-            <li>
-                <span class="step-number">3</span>
-                <h4>Angiv deltagere</h4>
-                <p>Tilføj antal og gruppe-type.</p>
-            </li>
-            <li>
-                <span class="step-number">4</span>
-                <h4>Bekræft</h4>
-                <p>Udfyld kontaktinfo og send.</p>
-            </li>
-        </ol>
-    </section>
-
-    <section id="booking-form" class="booking-wrapper">
-        <h2>Book nu</h2>
-        <form action="/submit-booking" method="post" class="booking-form">
-            <fieldset>
-                <legend>Aktivitet & tidspunkt</legend>
-                <div class="field">
-                    <label for="activity">Aktivitet</label>
-                    <select id="activity" name="activity" required>
-                        <option value="" disabled selected>Vælg aktivitet</option>
-                        <option value="minigolf">Minigolf</option>
-                        <option value="escape-room">Escape Room</option>
-                        <option value="bowling">Bowling</option>
-                        <option value="laser-tag">Laser Tag</option>
-                    </select>
-                </div>
-                <div class="field two-col">
-                    <div>
-                        <label for="date">Dato</label>
-                        <input id="date" name="date" type="date" required>
-                    </div>
-                    <div>
-                        <label for="timeslot">Tidsrum</label>
-                        <select id="timeslot" name="timeslot" required>
-                            <option value="" disabled selected>Vælg</option>
-                            <option>10:00</option>
-                            <option>12:00</option>
-                            <option>14:00</option>
-                            <option>16:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Deltagere</legend>
-                <div class="field two-col">
-                    <div>
-                        <label for="participants">Antal</label>
-                        <input id="participants" name="participants" type="number" min="1" max="60" required>
-                    </div>
-                    <div>
-                        <label for="groupType">Gruppetype</label>
-                        <select id="groupType" name="groupType" required>
-                            <option value="" disabled selected>Vælg</option>
-                            <option value="privat">Privat</option>
-                            <option value="firma">Firma</option>
-                            <option value="skole">Skole</option>
-                            <option value="forening">Forening</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Aldersgrupper</label>
-                    <div class="inline-check">
-                        <label><input type="checkbox" name="ageGroup" value="u12"> U12</label>
-                        <label><input type="checkbox" name="ageGroup" value="13-17"> 13-17</label>
-                        <label><input type="checkbox" name="ageGroup" value="18+"> 18+</label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Kontakt</legend>
-                <div class="field two-col">
-                    <div>
-                        <label for="name">Navn</label>
-                        <input id="name" name="name" type="text" required>
-                    </div>
-                    <div>
-                        <label for="email">Email</label>
-                        <input id="email" name="email" type="email" required>
-                    </div>
-                </div>
-                <div class="field two-col">
-                    <div>
-                        <label for="phone">Telefon</label>
-                        <input id="phone" name="phone" type="tel" pattern="[0-9 +]{6,}" required>
-                    </div>
-                    <div>
-                        <label for="note">Note (valgfri)</label>
-                        <input id="note" name="note" type="text" placeholder="Evt. kommentar">
-                    </div>
-                </div>
-            </fieldset>
-
-            <div class="field terms">
-                <label>
-                    <input type="checkbox" name="terms" required>
-                    Jeg accepterer vilkår og betingelser.
-                </label>
-            </div>
-
-            <div class="actions">
-                <button type="submit" class="btn primary">Bekræft booking</button>
-            </div>
-        </form>
-    </section>
-</section>
-
-<section class="activities-section">
-    <div class="container">
-        <h2>Vores aktiviteter</h2>
-        <div class="activity-grid">
-            <article class="activity-card">
-                <h3>Minigolf</h3>
-                <p>18 huller i varierende sværhedsgrad.</p>
-                <span class="tag">Familie</span>
-            </article>
-            <article class="activity-card">
-                <h3>Escape Room</h3>
-                <p>Løs gåder på tid i tema-rum.</p>
-                <span class="tag">Hold</span>
-            </article>
-            <article class="activity-card">
-                <h3>Bowling</h3>
-                <p>Moderne baner og loungeområde.</p>
-                <span class="tag">Social</span>
-            </article>
-            <article class="activity-card">
-                <h3>Laser Tag</h3>
-                <p>Hurtig action med vest og blaster.</p>
-                <span class="tag">Action</span>
-            </article>
-        </div>
-    </div>
-</section>
-
-<footer class="site-footer">
-    <div class="container">
-        <p>&copy; 2025 Adventure Park</p>
-    </div>
-</footer>
+<script th:src="@{/javascript/employee-bookings.js(v=${#dates.createNow().time})}"></script>
 </body>
 </html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="employeeBookings">
+    <section class="container">
+        <h2>Aktive bookinger</h2>
+        <div class="admin-list">
+
+            <article class="activity-row">
+                <div class="row-main">
+                    <h3>Booking #101</h3>
+                    <p>Minigolf · 2025-10-12 14:00 · 6 pers</p>
+                </div>
+                <div class="row-actions">
+                    <a href="#" class="open-booking"
+                       data-booking-id="101"
+                       data-activity="Minigolf"
+                       data-date="2025-10-12"
+                       data-time="14:00"
+                       data-participants="6"
+                       data-contact="mads@example.com">Åbn</a>
+                </div>
+            </article>
+
+            <article class="activity-row">
+                <div class="row-main">
+                    <h3>Booking #102</h3>
+                    <p>Escape Room · 2025-10-13 16:00 · 4 pers</p>
+                </div>
+                <div class="row-actions">
+                    <a href="#" class="open-booking"
+                       data-booking-id="102"
+                       data-activity="Escape Room"
+                       data-date="2025-10-13"
+                       data-time="16:00"
+                       data-participants="4"
+                       data-contact="info@example.com">Åbn</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>
+</html>

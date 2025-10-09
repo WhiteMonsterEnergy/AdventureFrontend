@@ -6,23 +6,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewTestController {
 
+    // Root loader
     @GetMapping("/")
-    public String home() {
+    public String index() {
         return "index";
     }
 
-    @GetMapping("/employee/bookings")
-    public String employeeBookings() {
-        return "employee-bookings";
-    }
-
-    @GetMapping("/admin/activities")
-    public String adminActivities() {
-        return "admin-activities";
-    }
-
-    @GetMapping("/employee/bookings/{id}")
-    public String employeeBookingDetail() {
-        return "employee-booking-detail";
+    // Fallbacks: server den samme index.html for “dybe” URLs,
+    // så frontend-JS håndterer visningen
+    @GetMapping({
+        "/employee/bookings",
+        "/employee/bookings/{id}",
+        "/admin/activities",
+        "/aktiviteter",
+        "/priser",
+        "/kontakt",
+        "/login"
+    })
+    public String spaFallback() {
+        return "index";
     }
 }
