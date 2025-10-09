@@ -22,7 +22,6 @@ var b4 = document.getElementById("nav-contact");
 if (b4) b4.onclick = function(e){ e.preventDefault(); show("contact-page"); };
 
 var b5 = document.getElementById("nav-login");
-if (b5) b5.onclick = function(e){ e.preventDefault(); show("login-page"); };
 
 var b6 = document.getElementById("nav-employee");
 if (b6) b6.onclick = function(e){ e.preventDefault(); show("employee-bookings-page"); };
@@ -56,3 +55,27 @@ document.addEventListener('click', function(e){
         show('employee-bookings-page');
     }
 });
+
+
+// ====== LOGIN PROMPT ====== //
+
+var loginPrompt = document.getElementById("loginPrompt");
+var span = document.getElementsByClassName("close")[0];
+b5.onclick = function()
+{
+    loginPrompt.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function()
+{
+    loginPrompt.style.display = "none";
+}
+
+// When the user clicks anywhere outside the modal, close it
+window.onclick = function(event)
+{
+    if (event.target === loginPrompt) {
+        loginPrompt.style.display = "none";
+    }
+}
