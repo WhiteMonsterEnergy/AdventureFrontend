@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Adventure Park | Employee – Aktive bookinger</title>
+    <link rel="stylesheet"
+          href="/styles.css"
+          th:href="@{/styles.css(v=${#dates.createNow().time})}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container site-header-inner">
+        <div class="branding">
+            <a href="/" class="logo">Adventure Park</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/">Booking</a></li>
+                <li><a href="/aktiviteter">Aktiviteter</a></li>
+                <li><a href="/admin/activities">Admin</a></li>
+                <li><a href="/employee/bookings" class="active">Employee</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="container fit-grid">
+    <section class="admin-card">
+        <header class="admin-card-head">
+            <div>
+                <h2>Aktive bookinger <span id="count" class="badge">0</span></h2>
+                <p class="muted">Viser kommende/aktive – ekskl. annullerede/afsluttede.</p>
+            </div>
+
+            <div class="toolbar">
+                <button class="btn" data-filter="today">I dag</button>
+                <button class="btn active" data-filter="all">Alle</button>
+                <form class="admin-search" onsubmit="event.preventDefault();">
+                    <input type="search" id="q" placeholder="Søg aktivitet/kunde">
+                    <button class="btn" type="button" id="btnSearch">Søg</button>
+                </form>
+            </div>
+        </header>
+
+        <div class="table-responsive">
+            <table class="data-table" id="tbl">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Start</th>
+                    <th>Slut</th>
+                    <th>Aktivitet</th>
+                    <th>Kunde</th>
+                    <th>Deltagere</th>
+                    <th>Status</th>
+                    <th>Handling</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <tr th:each="b : ${bookings}">
+                    <td th:text="${b.id}">1</td>
+                    <td th:text="${#temporals.format(b.startTime,'dd-MM-yyyy HH:mm')}">10-10-2025 12:00</td>
+                    <td th:text="${#temporals.format(b.endTime,'HH:mm')}">13:00</td>
+                    <td th:text="${b.activityName}">Minigolf</td>
+                    <td th:text="${b.customerName}">Mads Dam</td>
+                    <td th:text="${b.participants}">8</td>
+                    <td><span class="tag" th:text="${b.status}">ACTIVE</span></td>
+                    <td><a class="btn" th:href="@{'/employee/bookings/' + ${b.id}}">Detaljer</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="empty" class="muted">Ingen aktive bookinger matcher dine filtre.</div>
+    </section>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 Adventure Park</p>
+    </div>
+</footer>
+
+<script defer src="/employee-bookings.js"
+        th:src="@{/employee-bookings.js(v=${#dates.createNow().time})}"></script>
+</body>
+</html>
