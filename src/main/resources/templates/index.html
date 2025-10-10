@@ -11,7 +11,6 @@
 <header class="site-header" th:insert="~{fragments/navbar :: navbar}"></header>
 
 <div th:insert="~{fragments/login :: loginPrompt}"></div>
-
 <div th:insert="~{fragments/banner :: banner}"></div>
 
 <div id="booking-page" class="page" style="display:block" th:insert="~{fragments/booking_form :: bookingForm}"></div>
@@ -22,7 +21,8 @@
 <div id="employee-booking-detail-page" class="page" style="display:none" th:insert="~{fragments/employee-booking-detail :: employeeBookingDetail}"></div>
 <div id="admin-page" class="page" style="display:none" th:insert="~{fragments/admin-activities :: activitymanagement}"></div>
 
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+
 <script th:src="@{/javascript/main.js(v=${#dates.createNow().time})}"></script>
 </body>
-<footer th:insert="~{fragments/footer :: footer}"></footer>
 </html>
