@@ -139,3 +139,60 @@ section>h2{text-align:center;margin:0 0 1rem}
 }
 .admin-form textarea:focus{outline:none; border-color:var(--green-soft); box-shadow:0 0 0 3px rgba(28,153,90,.18)}
 .muted{color:#666; font-size:.95rem}
+
+/* === Employee bookings (tidligere inline CSS) === */
+.table-responsive{overflow:auto}
+.toolbar{display:flex;gap:.5rem;flex-wrap:wrap}
+.toolbar .btn.active{outline:2px solid var(--accent,#ffb347)}
+.badge{font-size:.8rem;padding:.25rem .5rem;border-radius:999px;border:1px solid var(--border,#d9e2d9)}
+.tag{border:1px solid var(--border,#d9e2d9);border-radius:999px;padding:.15rem .6rem;font-size:.8rem;background:#fff}
+.hline{height:2px;background:currentColor;opacity:.15;margin:.25rem 0 1rem;width:64px}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:.4rem .8rem;align-items:center}
+.kv dt{font-weight:600;opacity:.85}
+.kv dd{margin:0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:820px){.two-col{grid-template-columns:1fr}}
+.panel{background:var(--panel,#fff);border:1px solid var(--border,#d9e2d9);border-radius:var(--radius,10px);box-shadow:var(--shadow,0 4px 14px rgba(0,0,0,.08));padding:1rem}
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: min-content;
+}
+
+/* The Modal Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    cursor: pointer;
+}
