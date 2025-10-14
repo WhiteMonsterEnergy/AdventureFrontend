@@ -7,8 +7,8 @@ loginForm.onsubmit = async function (){
     event.preventDefault();
 
     const obj = {
-        "name": "simon",
-        "password": "1234"
+        "name":     document.getElementById("usernameInp").value,
+        "password": document.getElementById("passwordInp").value
     }
 
     const objectAsJsonString = JSON.stringify(obj);
@@ -21,8 +21,6 @@ loginForm.onsubmit = async function (){
     };
 
     const response = await fetch("http://localhost:8081/login",fetchOptions);
-
-
 
     if (!response.ok)
     {
