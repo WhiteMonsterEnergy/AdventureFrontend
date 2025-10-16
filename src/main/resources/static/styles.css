@@ -197,3 +197,7 @@ section>h2{text-align:center;margin:0 0 1rem}
 a:hover {
     cursor: pointer;
 }
+
+ul {
+    list-style-type: none;
+}

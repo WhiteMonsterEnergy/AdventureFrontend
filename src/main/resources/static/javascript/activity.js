@@ -1,6 +1,7 @@
 
 const activityForm = document.getElementById("activityForm");
 const activityList = document.getElementById('activityList');
+const activityGrid = document.getElementById('activityGrid');
 
 activityForm.onsubmit = async function()
 {
@@ -55,9 +56,31 @@ const listItemBtn = function (id) {
     return btn;
 }
 
-// todo: fetch single
+document.addEventListener('DOMContentLoaded', async function()
+{
+    if (activityGrid)
+    {
+        const list = await getBackend("activity");
 
-// todo: fetch list
+        list.forEach((act) =>
+        {
+            let card = document.createElement("li");
+            card.className = "activity-card";
+
+            card.innerHTML = "<h3>" + act.title + "</h3>" +
+                "<p>" + act.description + "</p>";
+
+            let tag = document.createElement("span");
+            tag.className = "tag";
+            tag.innerText = act.price + "kr";
+
+            card.appendChild(tag);
+            activityGrid.appendChild(card);
+        });
+    }
+});
+
+// todo: fetch single
 
 // todo: update entry
 

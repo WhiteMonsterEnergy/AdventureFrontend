@@ -18,7 +18,7 @@ const show = function (id) {
 const bookingBtn = document.getElementById("nav-booking");
 if (bookingBtn) bookingBtn.onclick = function(e){ e.preventDefault(); show("booking-page"); };
 const activityBtn = document.getElementById("nav-activities");
-if (activityBtn) activityBtn.onclick = function(e){ e.preventDefault(); show("activities-page"); };
+if (activityBtn) activityBtn.onclick = function(e){ e.preventDefault(); show("activities-page"); document.querySelectorAll('.hero').forEach(el => el.style.display = 'block');};
 const b3 = document.getElementById("nav-prices");
 if (b3) b3.onclick = function(e){ e.preventDefault(); show("prices-page"); };
 const contactBtn = document.getElementById("nav-contact");
