@@ -1,0 +1,55 @@
+<!--login.js test in browser -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login API Test</title>
+    <style>body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:20px} .ok{color:green}.fail{color:red}</style>
+</head>
+<body>
+<h1>Login API Browser Test</h1>
+<div id="results">Running...</div>
+
+<script type="module">
+    import { login } from '../javascript/login.api.js';
+
+    function pass(msg) {
+        const el = document.getElementById('results');
+        el.innerHTML += `<div class="ok">PASS: ${msg}</div>`;
+    }
+    function fail(msg) {
+        const el = document.getElementById('results');
+        el.innerHTML += `<div class="fail">FAIL: ${msg}</div>`;
+    }
+
+    (async () => {
+        // Mock global fetch to satisfy the test expectation
+        const mockProfile = { id: 1, name: 'bob' };
+        window.fetch = async (input, init) => {
+            // basic assertions on request shape (optional)
+            if (input !== '/api/login') return { ok: false, status: 404, text: async () => 'not found' };
+            if (!init || init.method !== 'POST') return { ok: false, status: 400, text: async () => 'bad request' };
+
+            // return a response-like object for the module
+            return {
+                ok: true,
+                json: async () => mockProfile
+            };
+        };
+
+        try {
+            const result = await login('bob', 'secret');
+
+            // simple deep-equal via JSON (sufficient for this simple object)
+            if (JSON.stringify(result) === JSON.stringify(mockProfile)) {
+                pass('login posts credentials and returns profile');
+            } else {
+                fail('returned profile did not match expected: ' + JSON.stringify(result));
+            }
+        } catch (e) {
+            fail('login threw: ' + e.message);
+        }
+    })();
+</script>
+</body>
+</html>

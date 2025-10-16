@@ -1,0 +1,25 @@
+<!--styles.css test in browser -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>styles.css test</title>
+    <link rel="stylesheet" href="/styles.css?v=TEST">
+    <style>
+        body { font-family: system-ui, sans-serif; padding: 16px; }
+        #results { margin-top: 20px; font-family: monospace; white-space: pre-wrap; }
+        .pass { color: green; }
+        .fail { color: red; }
+    </style>
+</head>
+<body>
+<h1 id="title" class="site-title">Site title</h1>
+<button id="primary-btn" class="btn btn-primary">Primary</button>
+<div id="banner" class="banner">Banner</div>
+
+<div id="results">Running tests...</div>
+
+<script src="/test/styles-test.js"></script>
+</body>
+</html>
