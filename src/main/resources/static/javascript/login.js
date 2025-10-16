@@ -1,9 +1,9 @@
 
-const loginForm = document.getElementById("loginForm");
+const loginForm   = document.getElementById("loginForm");
 const loginPrompt = document.getElementById("loginPrompt");
-const closeBtn = document.querySelector("#loginPrompt .close");
+const loginClose      = document.querySelector("#loginPrompt .close");
 
-var activeProfile;
+var activeProfile; // set when logged in.
 
 loginForm.onsubmit = async function ()
 {
@@ -28,17 +28,16 @@ loginForm.onsubmit = async function ()
 
 // todo: delete entry
 
-
-// set up LOGIN-modal
+// set up login-modal
 document.addEventListener('DOMContentLoaded', function()
 {
-    if (b5 && loginPrompt)
+    if (loginBtn && loginPrompt)
     {
-        b5.onclick = function(e){ e.preventDefault(); loginPrompt.style.display = "block"; };
+        loginBtn.onclick = function(e){ e.preventDefault(); loginPrompt.style.display = "block"; };
     }
-    if (closeBtn && loginPrompt)
+    if (loginClose && loginPrompt)
     {
-        closeBtn.onclick = function(){ loginPrompt.style.display = "none"; };
+        loginClose.onclick = function(){ loginPrompt.style.display = "none"; };
     }
     window.addEventListener('click', function(event){
         if (event.target === loginPrompt) loginPrompt.style.display = "none";

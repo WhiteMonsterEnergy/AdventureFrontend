@@ -2,48 +2,53 @@
 // Hide all pages
 function hideAll() {
     document.querySelectorAll('.page').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.hero').forEach(el => el.style.display = 'none');
     document.querySelectorAll('.nav').forEach(el => el.style.clear);
 }
 
 // show specified page
-function show(id) {
+const show = function (id) {
     hideAll();
     var el = document.getElementById(id);
-    if (el) el.style.display = 'block';
+    if (el) el.style.display = 'block'; // todo: light up current tab
     window.scrollTo(0, 0);
 }
 
 // set up NAV buttons - each first hides any-and-all pages, then shows related page
-const b1 = document.getElementById("nav-booking");
-if (b1) b1.onclick = function(e){ e.preventDefault(); show("booking-page"); };
-const b2 = document.getElementById("nav-activities");
-if (b2) b2.onclick = function(e){ e.preventDefault(); show("activities-page"); };
+const bookingBtn = document.getElementById("nav-booking");
+if (bookingBtn) bookingBtn.onclick = function(e){ e.preventDefault(); show("booking-page"); };
+const activityBtn = document.getElementById("nav-activities");
+if (activityBtn) activityBtn.onclick = function(e){ e.preventDefault(); show("activities-page"); };
 const b3 = document.getElementById("nav-prices");
 if (b3) b3.onclick = function(e){ e.preventDefault(); show("prices-page"); };
-const b4 = document.getElementById("nav-contact");
-if (b4) b4.onclick = function(e){ e.preventDefault(); show("contact-page"); };
-const b5 = document.getElementById("nav-login");
+const contactBtn = document.getElementById("nav-contact");
+if (contactBtn) contactBtn.onclick = function(e){ e.preventDefault(); show("contact-page"); };
+const loginBtn = document.getElementById("nav-login");
 // login provides own popup-logic
-const b6 = document.getElementById("nav-employee");
-if (b6) b6.onclick = function(e){ e.preventDefault(); show("employee-bookings-page"); };
-const b7 = document.getElementById("nav-admin");
-if (b7) b7.onclick = function(e){ e.preventDefault(); show("admin-page"); };
+const employeeBtn = document.getElementById("nav-employee");
+if (employeeBtn) employeeBtn.onclick = function(e){ e.preventDefault(); show("employee-bookings-page"); };
+const adminBtn = document.getElementById("nav-admin");
+if (adminBtn) adminBtn.onclick = function(e){ e.preventDefault(); show("admin-page"); fillActivityList();};
 
 // "global" methods for communication with backend
-const    getBackend = async function(payload, endpoint) {return await wireBackend(payload, endpoint,    "GET");}
-const   postBackend = async function(payload, endpoint) {return await wireBackend(payload, endpoint,   "POST");}
-const  patchBackend = async function(payload, endpoint) {return await wireBackend(payload, endpoint,  "PATCH");}
-const deleteBackend = async function(payload, endpoint) {return await wireBackend(payload, endpoint, "DELETE");}
-const wireBackend = async function(payload, endpoint, method)
+const    getBackend = async function(endpoint)          {return await wireBackend(endpoint,null,"GET");}
+const   postBackend = async function(endpoint, payload) {return await wireBackend(endpoint, payload,   "POST");}
+const  patchBackend = async function(endpoint, payload) {return await wireBackend(endpoint, payload,  "PATCH");}
+const deleteBackend = async function(endpoint, payload) {return await wireBackend(endpoint, payload, "DELETE");}
+const wireBackend = async function(endpoint, payload, method)
 {
     const objectAsJsonString = JSON.stringify(payload); // slightly easier debugging
 
     const fetchOptions =
     {
-        method: method,
-        headers: {"content-type": "application/json"},
-        body: JSON.stringify(payload)
+        method: method
     };
+
+    if (payload)
+    {
+        fetchOptions.headers = {"content-type": "application/json"};
+        fetchOptions.body = JSON.stringify(payload);
+    }
 
     const url = "http://localhost:8081/api/" + endpoint;
     const response = await fetch(url, fetchOptions);
