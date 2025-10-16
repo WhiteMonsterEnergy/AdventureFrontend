@@ -16,6 +16,8 @@ loginForm.onsubmit = async function ()
 
     activeProfile = await getBackend(payload, "profile/login");
     loginPrompt.style.display = "none";
+
+    // todo: hide button / display name
 }
 
 // todo: post entry
