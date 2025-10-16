@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="activityPage">
+  <section class="container">
+    <h2>Aktiviteter</h2>
+
+    <div th:insert="~{fragments/activity :: activityAdmin}"></div>
+
+    <div th:insert="~{fragments/activity :: activityList}"></div>
+
+  </section>
+  <script src="/javascript/activity.js"></script>
+</div>
+
+<div th:fragment="activityList">
+  <div class="admin-list">
+    <article class="activity-row">
+      <div class="row-main">
+        <h3>Minigolf</h3>
+        <p>18 huller</p>
+      </div>
+      <div class="row-actions">
+        <a class="btn" href="#">Redigér</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div th:fragment="activityAdmin" class="admin">
+  <section class="admin-card" id="editor">
+    <h3>Ny aktivitet</h3>
+    <form class="admin-form" id="activityForm">
+      <div class="field two-col">
+        <div>
+          <label for="a-name">Navn</label>
+          <input id="a-name" type="text" required>
+        </div>
+        <div>
+          <label for="a-desc">Beskrivelse</label>
+          <input id="a-desc" type="text" required>
+        </div>
+        <div>
+          <label for="a-price">Pris per Person</label>
+          <input id="a-price" type="number" step="0.01" required>
+        </div>
+        <div>
+          <label for="a-time">Tid per Session i minutter</label>
+          <input id="a-time" type="number" required>
+        </div>
+        <div>
+          <label for="a-cap">Max Deltagere</label>
+          <input id="a-cap" type="number" required>
+        </div>
+        <div>
+          <label for="a-age">Aldersgrænse</label>
+          <select id="a-age">
+            <option value="" selected>Ingen</option>
+            <option value="18">18+</option>
+            <option value="12">12+</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit">Opret</button>
+      </div>
+    </form>
+  </section>
+</div>
+</html>
