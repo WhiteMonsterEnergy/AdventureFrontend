@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="bookingForm">
+    <section id="booking-form" class="container">
+        <h2>Book nu</h2>
+        <form id="booking-form-el" class="booking-form">
+            <fieldset>
+                <legend>Aktivitet & tidspunkt</legend>
+                <div class="field">
+                    <label for="activity">Aktivitet</label>
+                    <select id="activity" required>
+                        <option value="" disabled selected>Vælg aktivitet</option>
+                        <option>Minigolf</option>
+                        <option>Escape Room</option>
+                        <option>Bowling</option>
+                        <option>Laser Tag</option>
+                    </select>
+                </div>
+                <div class="field two-col">
+                    <div>
+                        <label for="date">Dato</label>
+                        <input id="date" type="date" required>
+                    </div>
+                    <div>
+                        <label for="timeslot">Tidsrum</label>
+                        <select id="timeslot" required>
+                            <option value="" disabled selected>Vælg</option>
+                            <option>10:00</option>
+                            <option>12:00</option>
+                            <option>14:00</option>
+                            <option>16:00</option>
+                            <option>18:00</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Deltagere</legend>
+                <div class="field two-col">
+                    <div>
+                        <label for="participants">Antal</label>
+                        <input id="participants" type="number" min="1" max="60" required>
+                    </div>
+                    <div>
+                        <label for="groupType">Gruppetype</label>
+                        <select id="groupType" required>
+                            <option value="" disabled selected>Vælg</option>
+                            <option>Privat</option>
+                            <option>Firma</option>
+                            <option>Skole</option>
+                            <option>Forening</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Kontakt</legend>
+                <div class="field two-col">
+                    <div>
+                        <label for="name">Navn</label>
+                        <input id="name" type="text" required>
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <input id="email" type="email" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="actions">
+                <button type="submit" class="btn primary">Bekræft booking</button>
+            </div>
+        </form>
+    </section>
+</div>
+</html>
