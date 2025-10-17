@@ -30,6 +30,10 @@ if (b6) b6.onclick = function(e){ e.preventDefault(); show("employee-bookings-pa
 var b7 = document.getElementById("nav-admin");
 if (b7) b7.onclick = function(e){ e.preventDefault(); show("admin-page"); };
 
+
+var b8 = document.getElementById("nav-booked-activities");
+if (b8) b8.onclick = function(e) { e.preventDefault(); show("booked-activities-page"); };
+
 // Åbn booking fra employee-listen
 document.addEventListener('click', function(e){
     if (e.target && e.target.classList.contains('open-booking')) {
