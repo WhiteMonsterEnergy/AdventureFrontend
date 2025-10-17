@@ -1,4 +1,62 @@
 
+const activitySelector = document.getElementById("activityOptions");
+const bookingForm      = document.getElementById("bookingForm");
+
+const fillBookingOptions = async function()
+{
+    const list = await getBackend("activity");
+
+    list.forEach((act) =>
+    {
+        let option = document.createElement("option");
+
+        option.innerHTML = act.title;
+        option.value = act.id;
+
+        activitySelector.appendChild(option);
+    });
+}
+
+bookingForm.onsubmit = async function()
+{
+    event.preventDefault();
+
+    let visitor =
+        {
+            "name": document.getElementById("bf_name" ).value,
+            // "contact": document.getElementById("bf_email" ).value
+        };
+
+    const activity =
+        {
+            "id": activitySelector.value
+        };
+
+    const bookedActivity =
+        {
+            "activity": activity
+        }
+
+    visitor = await postBackend("profile/id", visitor);
+
+    const startTime = document.getElementById("bf_date").value
+                     + "T" + document.getElementById("bf_time").value;
+
+    const booking =
+        {
+            "visitorId":        visitor.visitorId,
+            "type":             document.getElementById("bf_groupType").value,
+            "startTime":        startTime,
+            "participants":     document.getElementById("participants"  ).value,
+            "bookedActivities": [bookedActivity]
+        };
+
+    await postBackend("bookings", booking);
+}
+
+
+
+/* Mads code
 // Åbn booking fra employee-listen
 document.addEventListener('click', function(e){
     if (e.target && e.target.classList.contains('open-booking')) {
@@ -94,3 +152,5 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });
 });
+
+*/
