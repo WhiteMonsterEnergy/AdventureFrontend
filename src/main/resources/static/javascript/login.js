@@ -3,8 +3,6 @@ const loginForm   = document.getElementById("loginForm");
 const loginPrompt = document.getElementById("loginPrompt");
 const loginClose      = document.querySelector("#loginPrompt .close");
 
-var activeProfile; // set when logged in.
-
 loginForm.onsubmit = async function ()
 {
     event.preventDefault();
@@ -14,7 +12,7 @@ loginForm.onsubmit = async function ()
         "password": document.getElementById("passwordInp").value
     }
 
-    activeProfile = await getBackend(payload, "profile/login");
+    activeProfile = await postBackend("profile/login", payload);
     loginPrompt.style.display = "none";
 
     // todo: hide button / display name
