@@ -32,8 +32,8 @@ if (employeeBtn) employeeBtn.onclick = function(e){ e.preventDefault(); show("em
 const adminBtn = document.getElementById("nav-admin");
 if (adminBtn) adminBtn.onclick = function(e){ e.preventDefault(); show("admin-page"); fillActivityList();};
 
-var b8 = document.getElementById("nav-booked-activities");
-if (b8) b8.onclick = function(e) { e.preventDefault(); show("booked-activities-page"); };
+const bookingListBtn = document.getElementById("nav-booked-activities");
+if (bookingListBtn) bookingListBtn.onclick = function(e) { e.preventDefault(); show("booked-activities-page"); };
 
 // "global" methods for communication with backend
 const    getBackend = async function(endpoint)          {return await wireBackend(endpoint,null,"GET");}

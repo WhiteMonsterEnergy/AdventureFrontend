@@ -45,9 +45,8 @@ bookingForm.onsubmit = async function()
     const booking =
         {
             "visitorId":        visitor.visitorId,
-            "type":             document.getElementById("bf_groupType").value,
             "startTime":        startTime,
-            "participants":     document.getElementById("participants"  ).value,
+            "participants":     document.getElementById("bf_participants"  ).value,
             "bookedActivities": [bookedActivity]
         };
 
