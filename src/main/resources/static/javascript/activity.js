@@ -7,7 +7,7 @@ activityForm.onsubmit = async function()
 {
     event.preventDefault();
 
-    const payload =
+    const activity =
     {
         "title":       document.getElementById("a-name" ).value,
         "description": document.getElementById("a-desc" ).value,
@@ -19,7 +19,7 @@ activityForm.onsubmit = async function()
         "equipmentUseSet": []
     }
 
-    await postBackend(payload,  "activity");
+    await postBackend("activity", activity);
 }
 
 const fillActivityList = async function()

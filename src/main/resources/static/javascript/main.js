@@ -1,4 +1,6 @@
 
+let activeProfile; // set by 'login.js' when logged in
+
 // Hide all pages
 function hideAll() {
     document.querySelectorAll('.page').forEach(el => el.style.display = 'none');
@@ -16,7 +18,7 @@ const show = function (id) {
 
 // set up NAV buttons - each first hides any-and-all pages, then shows related page
 const bookingBtn = document.getElementById("nav-booking");
-if (bookingBtn) bookingBtn.onclick = function(e){ e.preventDefault(); show("booking-page"); };
+if (bookingBtn) bookingBtn.onclick = function(e){ e.preventDefault(); show("booking-page"); fillBookingOptions(); };
 const activityBtn = document.getElementById("nav-activities");
 if (activityBtn) activityBtn.onclick = function(e){ e.preventDefault(); show("activities-page"); document.querySelectorAll('.hero').forEach(el => el.style.display = 'block');};
 const b3 = document.getElementById("nav-prices");
@@ -29,6 +31,9 @@ const employeeBtn = document.getElementById("nav-employee");
 if (employeeBtn) employeeBtn.onclick = function(e){ e.preventDefault(); show("employee-bookings-page"); };
 const adminBtn = document.getElementById("nav-admin");
 if (adminBtn) adminBtn.onclick = function(e){ e.preventDefault(); show("admin-page"); fillActivityList();};
+
+const bookingListBtn = document.getElementById("nav-booked-activities");
+if (bookingListBtn) bookingListBtn.onclick = function(e) { e.preventDefault(); show("booked-activities-page"); };
 
 // "global" methods for communication with backend
 const    getBackend = async function(endpoint)          {return await wireBackend(endpoint,null,"GET");}
