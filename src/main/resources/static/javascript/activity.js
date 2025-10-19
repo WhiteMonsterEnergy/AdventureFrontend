@@ -85,6 +85,7 @@ function listItemBtn(id) {
 }
 
 // ---------------------- Front page grid ---------------------------------
+// Cards show ONLY title and price; no descriptions on the front page.
 async function buildActivityGrid() {
     if (!activityGrid) return;
 
@@ -99,8 +100,10 @@ async function buildActivityGrid() {
         li.innerHTML = `
       <article class="card">
         <h3 class="title">${safe(act.title)}</h3>
-        <p class="muted">${safe(act.description ?? "")}</p>
-        <span class="price-pill">${act.price != null ? act.price : 0}KR</span>
+        <div class="card-footer">
+          <span class="price-pill">${act.price != null ? act.price : 0}KR</span>
+          <span class="see-more" aria-hidden="true">Se detaljer ›</span>
+        </div>
       </article>
     `;
 
