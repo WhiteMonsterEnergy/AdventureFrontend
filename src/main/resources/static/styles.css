@@ -99,6 +99,7 @@ section>h2{text-align:center;margin:0 0 1rem}
 }
 
 /* === Admin UI (tilføjet) === */
+/* todo .admin{display: none} */
 .admin-grid{align-items:start}
 .admin-card{
     background:#fff;
@@ -195,4 +196,8 @@ section>h2{text-align:center;margin:0 0 1rem}
 
 a:hover {
     cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
 }
