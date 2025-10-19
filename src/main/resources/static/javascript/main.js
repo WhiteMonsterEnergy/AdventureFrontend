@@ -1,4 +1,3 @@
-
 let activeProfile; // set by 'login.js' when logged in
 
 // Hide all pages
@@ -19,21 +18,38 @@ const show = function (id) {
 // set up NAV buttons - each first hides any-and-all pages, then shows related page
 const bookingBtn = document.getElementById("nav-booking");
 if (bookingBtn) bookingBtn.onclick = function(e){ e.preventDefault(); show("booking-page"); fillBookingOptions(); };
+
 const activityBtn = document.getElementById("nav-activities");
 if (activityBtn) activityBtn.onclick = function(e){ e.preventDefault(); show("activities-page"); document.querySelectorAll('.hero').forEach(el => el.style.display = 'block');};
+
 const b3 = document.getElementById("nav-prices");
 if (b3) b3.onclick = function(e){ e.preventDefault(); show("prices-page"); };
+
 const contactBtn = document.getElementById("nav-contact");
 if (contactBtn) contactBtn.onclick = function(e){ e.preventDefault(); show("contact-page"); };
-const loginBtn = document.getElementById("nav-login");
-// login provides own popup-logic
+
+const loginBtn = document.getElementById("nav-login"); // login provides own popup-logic
+
 const employeeBtn = document.getElementById("nav-employee");
 if (employeeBtn) employeeBtn.onclick = function(e){ e.preventDefault(); show("employee-bookings-page"); };
+
 const adminBtn = document.getElementById("nav-admin");
 if (adminBtn) adminBtn.onclick = function(e){ e.preventDefault(); show("admin-page"); fillActivityList();};
 
 var b8 = document.getElementById("nav-booked-activities");
 if (b8) b8.onclick = function(e) { e.preventDefault(); show("booked-activities-page"); };
+
+// HERO "Start booking" button → gå direkte til booking-siden og hent aktiviteter
+const startBookingBtn = document.getElementById("startBookingBtn");
+if (startBookingBtn) {
+    startBookingBtn.onclick = function(e) {
+        e.preventDefault();
+        show("booking-page");
+        if (typeof fillBookingOptions === "function") {
+            fillBookingOptions();
+        }
+    };
+}
 
 // "global" methods for communication with backend
 const    getBackend = async function(endpoint)          {return await wireBackend(endpoint,null,"GET");}
@@ -45,9 +61,9 @@ const wireBackend = async function(endpoint, payload, method)
     const objectAsJsonString = JSON.stringify(payload); // slightly easier debugging
 
     const fetchOptions =
-    {
-        method: method
-    };
+        {
+            method: method
+        };
 
     if (payload)
     {
