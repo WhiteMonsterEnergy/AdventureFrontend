@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="activityDetail">
+    <section class="container">
+        <a id="backToActivities" class="btn" href="#">← Til aktiviteter</a>
+
+        <article class="card" style="margin-top:1rem">
+            <header style="margin-bottom:.5rem">
+                <h2 id="act-title">—</h2>
+            </header>
+
+            <p id="act-description" class="muted" style="margin-bottom:1rem">—</p>
+
+            <ul class="key-values" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin-bottom:0">
+                <li><strong>Pris</strong><br><span id="act-price">—</span></li>
+                <li><strong>Varighed</strong><br><span id="act-duration">—</span></li>
+                <li><strong>Aldersgrænse</strong><br><span id="act-minAge">—</span></li>
+            </ul>
+        </article>
+    </section>
+</div>
+</html>
