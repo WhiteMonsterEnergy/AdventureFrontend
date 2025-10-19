@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Adventure Park</title>
+    <link rel="stylesheet" th:href="@{/styles.css(v=${#dates.createNow().time})}">
+</head>
+<body>
+
+<header class="site-header" th:insert="~{fragments/navbar :: navbar}"></header>
+
+<div th:insert="~{fragments/login :: loginPrompt}"></div>
+<div th:insert="~{fragments/banner :: banner}"></div>
+
+<div id="activities-page" class="page" style="display:block" th:insert="~{fragments/activity :: cards}"></div>
+<div id="booking-page" class="page" style="display:none" th:insert="~{fragments/booking_form :: bookingForm}"></div>
+<div id="employee-bookings-page" class="page" style="display:none" th:insert="~{fragments/employee-bookings :: employeeBookings}"></div>
+<div id="employee-booking-detail-page" class="page" style="display:none" th:insert="~{fragments/employee-booking-detail :: employeeBookingDetail}"></div>
+<div id="admin-page" class="page" style="display:none" th:insert="~{fragments/activity :: activityPage}"></div>
+<div id="booked-activities-page" class="page" style="display:none" th:insert="~{fragments/booked_activities_list :: bookingList}"></div>
+
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+
+<script th:src="@{/javascript/main.js(v=${#dates.createNow().time})}"></script>
+</body>
+</html>

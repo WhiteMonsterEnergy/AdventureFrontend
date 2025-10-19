@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="navbar">
+    <div class="container site-header-inner">
+        <div class="branding">
+            <a href="/" class="logo">Adventure Park</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a class="nav" id="nav-activities" href="#">Aktiviteter</a></li>
+                <li><a class="nav" id="nav-booking" href="#">Booking</a></li>
+                <li><a id="nav-booked-activities" href="#">Bookede aktiviteter</a></li>
+
+                <!--
+                <li><a class="nav" id="nav-prices" href="#">Priser</a></li>
+                <li><a class="nav" id="nav-contact" href="#">Kontakt</a></li>
+                -->
+
+                <li><a class="nav" id="nav-login" href="#">Log ind</a></li>
+                <li><a class="nav" id="nav-employee" href="#">Employee</a></li>
+                <li><a class="nav" id="nav-admin" href="#">Admin</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+</html>

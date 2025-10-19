@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="bookingForm">
+    <section id="booking-form" class="container">
+        <h2>Book nu</h2>
+        <form id="bookingForm" class="booking-form">
+            <fieldset>
+                <legend>Aktivitet & tidspunkt</legend>
+                <div class="field">
+                    <label for="activityOptions">Aktivitet</label>
+                    <select id="activityOptions" required>
+                        <option value="" disabled selected>Vælg aktivitet</option>
+                    </select>
+                </div>
+                <div class="field two-col">
+                    <div>
+                        <label for="bf_date">Dato</label>
+                        <input id="bf_date" type="date" required>
+                    </div>
+                    <div>
+                        <label for="bf_time">Tidsrum</label>
+                        <select id="bf_time" required>
+                            <option value="" disabled selected>Vælg</option>
+                            <option>10:00</option>
+                            <option>12:00</option>
+                            <option>14:00</option>
+                            <option>16:00</option>
+                            <option>18:00</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Deltagere</legend>
+                <div class="field two-col">
+                    <div>
+                        <label for="bf_participants">Antal</label>
+                        <input id="bf_participants" type="number" min="1" max="60" required>
+                    </div>
+                    <div>
+                        <label for="bf_groupType">Gruppetype</label>
+                        <select id="bf_groupType" required>
+                            <option value="" disabled selected>Vælg</option>
+                            <option>Privat</option>
+                            <option>Firma</option>
+                            <option>Skole</option>
+                            <option>Forening</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Kontakt</legend>
+                <div class="field two-col">
+                    <div>
+                        <label for="bf_name">Navn</label>
+                        <input id="bf_name" type="text" required>
+                    </div>
+                    <div>
+                        <label for="bf_email">Email</label>
+                        <input id="bf_email" type="email" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="actions">
+                <button type="submit" class="btn primary">Bekræft booking</button>
+            </div>
+        </form>
+    </section>
+    <script src="/javascript/booking.js"></script>
+</div>
+
+</html>

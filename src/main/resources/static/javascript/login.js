@@ -1,0 +1,45 @@
+
+const loginForm   = document.getElementById("loginForm");
+const loginPrompt = document.getElementById("loginPrompt");
+const loginClose      = document.querySelector("#loginPrompt .close");
+
+loginForm.onsubmit = async function ()
+{
+    event.preventDefault();
+
+    const payload = {
+        "name":     document.getElementById("usernameInp").value,
+        "password": document.getElementById("passwordInp").value
+    }
+
+    activeProfile = await postBackend("profile/login", payload);
+    loginPrompt.style.display = "none";
+
+    // todo: hide button / display name
+}
+
+// todo: post entry
+
+// todo: fetch single
+
+// todo: fetch list
+
+// todo: update entry
+
+// todo: delete entry
+
+// set up login-modal
+document.addEventListener('DOMContentLoaded', function()
+{
+    if (loginBtn && loginPrompt)
+    {
+        loginBtn.onclick = function(e){ e.preventDefault(); loginPrompt.style.display = "block"; };
+    }
+    if (loginClose && loginPrompt)
+    {
+        loginClose.onclick = function(){ loginPrompt.style.display = "none"; };
+    }
+    window.addEventListener('click', function(event){
+        if (event.target === loginPrompt) loginPrompt.style.display = "none";
+    });
+});
