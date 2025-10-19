@@ -12,7 +12,8 @@ loginForm.onsubmit = async function ()
         "password": document.getElementById("passwordInp").value
     }
 
-    activeProfile = await postBackend("profile/login", payload);
+    activeProfile  = await postBackend("profile/login", payload);
+    window.profile = activeProfile;
     loginPrompt.style.display = "none";
 
     // todo: hide button / display name

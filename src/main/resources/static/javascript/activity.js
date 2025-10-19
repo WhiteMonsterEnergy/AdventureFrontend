@@ -9,12 +9,12 @@ activityForm.onsubmit = async function()
 
     const activity =
     {
-        "title":       document.getElementById("a-name" ).value,
-        "description": document.getElementById("a-desc" ).value,
-        "price":       document.getElementById("a-price").value,
-        "ageLimit":    document.getElementById("a-age"  ).value,
-        "capacity":    document.getElementById("a-cap"  ).value,
-        "fixedTime":   document.getElementById("a-time" ).value,
+        "title":       document.getElementById("af_name" ).value,
+        "description": document.getElementById("af_desc" ).value,
+        "price":       document.getElementById("af_price").value,
+        "ageLimit":    document.getElementById("af_age"  ).value,
+        "capacity":    document.getElementById("af_cap"  ).value,
+        "fixedTime":   document.getElementById("af_time" ).value,
         "minimumMinutes": 0,
         "equipmentUseSet": []
     }
