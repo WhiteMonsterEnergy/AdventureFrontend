@@ -31,7 +31,7 @@ services:
   backend:
     container_name: backend
     build:
-      context: github.com/WhiteMonsterEnergy/AdventureBackend.git#prod
+      context: github.com/WhiteMonsterEnergy/AdventureBackend.git
     ports:
       - "127.0.0.1:8081:8081"
     environment:
@@ -46,7 +46,7 @@ services:
   frontend:
     container_name: frontend
     build:
-      context: github.com/WhiteMonsterEnergy/AdventureFrontend.git#prod
+      context: github.com/WhiteMonsterEnergy/AdventureFrontend.git
     ports:
       - "127.0.0.1:8080:8080"
 
