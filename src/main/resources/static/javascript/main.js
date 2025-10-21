@@ -49,8 +49,8 @@ if (adminBtn) adminBtn.onclick = function(e){
     if (typeof fillActivityList === "function") fillActivityList();
 };
 
-var b8 = document.getElementById("nav-booked-activities");
-if (b8) b8.onclick = function(e) { e.preventDefault(); show("booked-activities-page"); };
+const bookingListBtn = document.getElementById("nav-booked-activities");
+if (bookingListBtn) bookingListBtn.onclick = function(e) { e.preventDefault(); show("booked-activities-page"); };
 
 // HERO "Start booking" button → go directly to booking page and load activities
 const startBookingBtn = document.getElementById("startBookingBtn");
