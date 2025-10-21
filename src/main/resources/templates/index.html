@@ -14,6 +14,7 @@
 <div th:insert="~{fragments/banner :: banner}"></div>
 
 <div id="activities-page" class="page" style="display:block" th:insert="~{fragments/activity :: cards}"></div>
+<div id="activity-detail-page" class="page" style="display:none" th:insert="~{fragments/activity_detail :: activityDetail}"></div>
 <div id="booking-page" class="page" style="display:none" th:insert="~{fragments/booking_form :: bookingForm}"></div>
 <div id="employee-bookings-page" class="page" style="display:none" th:insert="~{fragments/employee-bookings :: employeeBookings}"></div>
 <div id="employee-booking-detail-page" class="page" style="display:none" th:insert="~{fragments/employee-booking-detail :: employeeBookingDetail}"></div>
@@ -22,6 +23,8 @@
 
 <footer th:insert="~{fragments/footer :: footer}"></footer>
 
+<!-- order matters: main.js first, then activity.js -->
 <script th:src="@{/javascript/main.js(v=${#dates.createNow().time})}"></script>
 </body>
 </html>
+

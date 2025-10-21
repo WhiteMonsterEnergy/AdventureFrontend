@@ -1,87 +1,142 @@
-
+// --------- DOM refs (may be missing on some pages, so we guard) ----------
 const activityForm = document.getElementById("activityForm");
-const activityList = document.getElementById('activityList');
-const activityGrid = document.getElementById('activityGrid');
+const activityList = document.getElementById("activityList");
+const activityGrid = document.getElementById("activityGrid");
 
-activityForm.onsubmit = async function()
-{
-    event.preventDefault();
+// ----------------------- Helpers ----------------------------------------
+const safe = (v) =>
+    (v ?? "").toString().replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
+const setTxt = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val ?? "—";
+};
 
-    const activity =
-    {
-        "title":       document.getElementById("a-name" ).value,
-        "description": document.getElementById("a-desc" ).value,
-        "price":       document.getElementById("a-price").value,
-        "ageLimit":    document.getElementById("a-age"  ).value,
-        "capacity":    document.getElementById("a-cap"  ).value,
-        "fixedTime":   document.getElementById("a-time" ).value,
-        "minimumMinutes": 0,
-        "equipmentUseSet": []
-    }
+// --------------------- Create: admin form -------------------------------
+if (activityForm) {
+    activityForm.onsubmit = async function (event) {
+        event.preventDefault();
 
-    await postBackend("activity", activity);
+        const activity = {
+            title:       document.getElementById("a-name").value,
+            description: document.getElementById("a-desc").value,
+            price:       Number(document.getElementById("a-price").value),
+            ageLimit:    document.getElementById("a-age").value || null,
+            capacity:    Number(document.getElementById("a-cap").value),
+            fixedTime:   Number(document.getElementById("a-time").value), // minutes
+            minimumMinutes: 0,
+            equipmentUseSet: []
+        };
+
+        await postBackend("activity", activity);
+
+        if (activityList) {
+            activityList.innerHTML = "";
+            await fillActivityList();
+        }
+        if (activityGrid) {
+            activityGrid.innerHTML = "";
+            await buildActivityGrid();
+        }
+
+        activityForm.reset();
+    };
 }
 
-const fillActivityList = async function()
-{
+// ---------------------- Admin list --------------------------------------
+async function fillActivityList() {
+    if (!activityList) return;
     const list = await getBackend("activity");
 
-    list.forEach((act) =>
-    {
-        let row = document.createElement("li");
+    activityList.innerHTML = "";
+    (list || []).forEach((act) => {
+        const row = document.createElement("li");
         row.className = "activity-row";
 
-        row.innerHTML = "<div><h3>" + act.title + "</h3>" +
-            "<p>" + act.description + "</p></div>" +
-            "<div><p>max " + act.capacity + " personer</p>" +
-            "<p>" + act.ageLimit + " år minimum</p></div>" +
-            "<div><p>" + act.price + "kr</p>" +
-            "<p>" + act.fixedTime + "minutter</p></div>";
+        row.innerHTML =
+            `<div>
+        <h3>${safe(act.title)}</h3>
+        <p>${safe(act.description ?? "")}</p>
+      </div>
+      <div>
+        <p>Max ${safe(act.capacity)} participants</p>
+        <p>Min age ${safe(act.ageLimit ?? "None")}</p>
+      </div>
+      <div>
+        <p>${safe(act.price)} kr</p>
+        <p>${safe(act.fixedTime)} minutes</p>
+      </div>`;
 
         row.appendChild(listItemBtn(act.id));
         activityList.appendChild(row);
     });
 }
 
-const listItemBtn = function (id) {
-
-    let pos = document.createElement("div");
+function listItemBtn(id) {
+    const pos = document.createElement("div");
     pos.className = "row-actions";
 
-    let btn = document.createElement("a");
-    btn.className = "btn"; btn.innerText ="Redigér";
+    const btn = document.createElement("a");
+    btn.className = "btn";
+    btn.innerText = "Edit";
+    btn.href = "#";
+    pos.appendChild(btn);
 
-    // todo: logic deferring to specified activity
-
-    return btn;
+    return pos;
 }
 
-document.addEventListener('DOMContentLoaded', async function()
-{
-    if (activityGrid)
-    {
-        const list = await getBackend("activity");
+// ---------------------- Front page grid ---------------------------------
+// Cards show ONLY title and price; no descriptions on the front page.
+async function buildActivityGrid() {
+    if (!activityGrid) return;
 
-        list.forEach((act) =>
-        {
-            let card = document.createElement("li");
-            card.className = "activity-card";
+    const list = await getBackend("activity");
+    activityGrid.innerHTML = "";
 
-            card.innerHTML = "<h3>" + act.title + "</h3>" +
-                "<p>" + act.description + "</p>";
+    (list || []).forEach((act) => {
+        const li = document.createElement("li");
+        li.className = "activity-card";
+        li.setAttribute("data-activity-id", act.id);
 
-            let tag = document.createElement("span");
-            tag.className = "tag";
-            tag.innerText = act.price + "kr";
+        li.innerHTML = `
+      <article class="card">
+        <h3 class="title">${safe(act.title)}</h3>
+        <div class="card-footer">
+          <span class="price-pill">${act.price != null ? act.price : 0}KR</span>
+          <span class="see-more" aria-hidden="true">Se detaljer ›</span>
+        </div>
+      </article>
+    `;
 
-            card.appendChild(tag);
-            activityGrid.appendChild(card);
-        });
+        li.addEventListener("click", () => openActivityDetail(act.id));
+        activityGrid.appendChild(li);
+    });
+}
+
+// ---------------------- Detail view -------------------------------------
+async function openActivityDetail(id) {
+    const a = await getBackend("activity/" + id);
+    if (!a) return;
+
+    setTxt("act-title", a.title);
+    setTxt("act-description", a.description ?? "");
+    setTxt("act-price", a.price != null ? `${a.price} KR` : "—");
+    setTxt("act-duration", a.fixedTime != null ? `${a.fixedTime} min` : "—");
+    setTxt("act-minAge", a.ageLimit ?? "None");
+
+    show("activity-detail-page");
+}
+
+// Back button inside the detail view
+document.addEventListener("click", (e) => {
+    if (e.target && e.target.id === "backToActivities") {
+        e.preventDefault();
+        show("activities-page");
+        document.querySelectorAll(".hero").forEach((el) => (el.style.display = "block"));
     }
 });
 
-// todo: fetch single
-
-// todo: update entry
-
-// todo: delete entry
+// ---------------------- Initialization ----------------------------------
+document.addEventListener("DOMContentLoaded", async () => {
+    if (activityGrid) await buildActivityGrid();
+    if (activityList) await fillActivityList();
+});

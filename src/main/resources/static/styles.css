@@ -59,6 +59,7 @@ section>h2{text-align:center;margin:0 0 1rem}
 .activity-card h3{margin:0;font-size:1rem}
 .activity-card p{margin:.35rem 0 .5rem;font-size:.88rem;color:#444}
 .activity-card .tag{display:inline-block;background:var(--green-soft);color:#fff;font-size:.62rem;padding:.28rem .45rem;border-radius:4px;text-transform:uppercase}
+.activity-card:hover{cursor: pointer}
 
 .steps{background:linear-gradient(145deg,#f5faf5,#e9f4ec)}
 .step-flow{list-style:none;display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
