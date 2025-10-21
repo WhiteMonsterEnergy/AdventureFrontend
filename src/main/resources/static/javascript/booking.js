@@ -78,28 +78,26 @@ bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (chosen.length === 0 || chosen.length > 10) {
-        alert("Vælg mellem 1 og 10 aktiviteter.");
+        alert("Vælg venligst mellem 1 og 10 aktiviteter.");
         return;
     }
 
     let visitor = {
         name: document.getElementById("bf_name").value,
-        // contact: document.getElementById("bf_email").value
+        contactInfo: document.getElementById("bf_email").value
     };
-    visitor = await postBackend("profile/id", visitor);
 
     const startTime = document.getElementById("bf_date").value
-        + "T" + document.getElementById("bf_time").value;
+                     + "T" + document.getElementById("bf_time").value;
 
     const bookedActivities = chosen.map(a => ({
         activity: { id: a.id }
     }));
 
     const booking = {
-        visitorId:    visitor.visitorId,
-        type:         document.getElementById("bf_groupType").value,
-        startTime:    startTime,
-        participants: Number(document.getElementById("participants").value),
+        visitor:          visitor,
+        startTime:        startTime,
+        participants:     document.getElementById("bf_participants").value,
         bookedActivities: bookedActivities
     };
 
