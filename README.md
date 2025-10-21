@@ -1,34 +1,34 @@
 # 🧭 AdventureXP - Frontend
 
 **AdventureXP Frontend** provides the user interface for the AdventureXP action park reservation system.  
-It enables employees and customers to interact with the backend through web pages, manage reservations, and view activity information.
+It allows employees and customers to manage bookings, activities, and authentication through an HTML and JavaScript-based interface powered by Thymeleaf.
 
 ---
 
 ## 🌐 Features
 
-- User-friendly interface for managing activity reservations  
-- Display activity schedules, availability, and restrictions  
-- Form-based reservation creation for both individuals and companies  
-- Login system with employee roles (Manager / Operator)  
-- Dynamic views powered by Thymeleaf templates  
-- Integration with the backend REST API  
-- Basic JavaScript-driven interactivity  
+- Intuitive HTML interface for activity and booking management  
+- Displays activity schedules, age restrictions, and availability  
+- Employee login and role-based access (Manager / Operator)  
+- Form-based booking for individuals and companies  
+- REST API integration with the backend  
+- Smoke and functional tests for frontend stability  
 
 ---
 
 ## 🧱 Technologies
 
-- **Framework:** Spring Boot (Java 21)  
 - **Frontend:** HTML, CSS, JavaScript  
-- **Templating:** Thymeleaf  
-- **Integration:** REST communication with AdventureXP Backend  
+- **Templating:** Thymeleaf (dynamic rendering)  
+- **Framework:** Spring Boot (Java 21)  
 - **Build Tool:** Maven  
-- **Testing:** JUnit for controllers, static HTML/JS test files  
+- **Testing:**  
+  - **Smoke test:** ensures the app context loads successfully  
+  - **Functional tests:** validate controller view mappings and accessibility  
 
 ---
 
-## 📁 Project Structure (Frontend)
+## 📁 Project Structure
 
 ```plaintext
 adventurexp-frontend/
@@ -39,7 +39,7 @@ adventurexp-frontend/
 │   │   │       ├── activity/
 │   │   │       ├── controller/
 │   │   │       │   └── ViewController.java
-│   │   │       └── AdventureFrontendApplication.java      # Application entry point
+│   │   │       └── AdventureFrontendApplication.java
 │   │   │
 │   │   └── resources/
 │   │       ├── static/
@@ -59,8 +59,11 @@ adventurexp-frontend/
 │   │       │   ├── favicon.ico
 │   │       │   └── styles.css
 │   │       │
-│   │       ├── templates/
-│   │       │   └── (Thymeleaf HTML templates)
+│   │       ├── templates/                   # Thymeleaf HTML pages
+│   │       │   ├── login.html
+│   │       │   ├── activities.html
+│   │       │   ├── booking.html
+│   │       │   └── index.html
 │   │       │
 │   │       └── application.properties
 │   │
